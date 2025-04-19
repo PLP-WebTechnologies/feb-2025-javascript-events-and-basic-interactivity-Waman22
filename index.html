@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Form Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+            display: none;
+        }
+        .success {
+            color: green;
+            font-size: 0.9em;
+            display: none;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #colorBox {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            border: 1px solid #000;
+            transition: background-color 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive Form Demo</h1>
+    <form id="registrationForm">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" required>
+            <span id="usernameError" class="error">Username must be at least 3 characters long</span>
+            <span id="usernameSuccess" class="success">Username looks good!</span>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+            <span id="emailError" class="error">Please enter a valid email address</span>
+            <span id="emailSuccess" class="success">Email is valid!</span>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required>
+            <span id="passwordError" class="error">Password must be at least 8 characters long</span>
+            <span id="passwordSuccess" class="success">Password is strong!</span>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <div>
+        <button id="colorButton">Change Color</button>
+        <div id="colorBox"></div>
+    </div>
+
+    <script>
+        // Event Listeners for Form Validation
+        const form = document.getElementById('registrationForm');
+        const usernameInput = document.getElementById('username');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        // Validate Username
+        usernameInput.addEventListener('input', () => {
+            const username = usernameInput.value;
+            const error = document.getElementById('usernameError');
+            const success = document.getElementById('usernameSuccess');
+            if (username.length < 3) {
+                error.style.display = 'block';
+                success.style.display = 'none';
+            } else {
+                error.style.display = 'none';
+                success.style.display = 'block';
+            }
+        });
+
+        // Validate Email
+        emailInput.addEventListener('input', () => {
+            const email = emailInput.value;
+            const error = document.getElementById('emailError');
+            const success = document.getElementById('emailSuccess');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                error.style.display = 'block';
+                success.style.display = 'none';
+            } else {
+                error.style.display = 'none';
+                success.style.display = 'block';
+            }
+        });
+
+        // Validate Password
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+            const error = document.getElementById('passwordError');
+            const success = document.getElementById('passwordSuccess');
+            if (password.length < 8) {
+                error.style.display = 'block';
+                success.style.display = 'none';
+            } else {
+                error.style.display = 'none';
+                success.style.display = 'block';
+            }
+        });
+
+        // Form Submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = usernameInput.value;
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (username.length >= 3 && emailRegex.test(email) && password.length >= 8) {
+                alert('Form submitted successfully!');
+                form.reset();
+                document.querySelectorAll('.success').forEach(el => el.style.display = 'none');
+            } else {
+                alert('Please fix the errors in the form.');
+            }
+        });
+
+        // Interactive Color Change
+        const colorButton = document.getElementById('colorButton');
+        const colorBox = document.getElementById('colorBox');
+
+        colorButton.addEventListener('click', () => {
+            const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+            colorBox.style.backgroundColor = randomColor;
+        });
+    </script>
+</body>
+</html>
